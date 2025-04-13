@@ -21,23 +21,23 @@ LangTutor – это образовательное веб-приложение 
   предметы и функциональные модули (например, дополнительные темы, модули для
   тестирования знаний, интерактивные задания и многое другое).
 
-# 1. Установка зависимостей через Poetry и установка pre-commit хуков
+## 1. Установка зависимостей через Poetry и установка pre-commit хуков
 
 poetry install pre-commit install
 
-# 2. Применение миграций базы данных
+## 2. Применение миграций базы данных
 
 poetry run python manage.py migrate
 
-# 3. Запуск сервера разработки Django
+## 3. Запуск сервера разработки Django
 
 poetry run python manage.py runserver
 
-# 4. (Опционально) Запуск тестов с использованием Django-тестового раннера
+## 4. (Опционально) Запуск тестов с использованием Django-тестового раннера
 
 poetry run python manage.py test apps.tutor.tests
 
-# Альтернативно, если у вас установлен pytest и pytest-django:
+## Альтернативно, если у вас установлен pytest и pytest-django:
 
 poetry run pytest apps/tutor/tests.py
 
