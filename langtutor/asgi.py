@@ -1,7 +1,10 @@
 """
 ASGI config for LangTutor project.
+
+It exposes the ASGI callable as a module-level variable named ``application``.
 """
 
+# pylint: disable=import-error
 import os
 
 from django.core.asgi import get_asgi_application

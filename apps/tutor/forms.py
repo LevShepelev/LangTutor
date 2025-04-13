@@ -1,10 +1,13 @@
+"""
+Forms for the tutor app.
+"""
+
+# pylint: disable=import-error,too-few-public-methods
 from django import forms
 
 
 class ChatForm(forms.Form):
-    """
-    Форма для отправки запроса в чат.
-    """
+    """Form for sending chat messages."""
 
     prompt = forms.CharField(
         label="Введите ваш запрос",

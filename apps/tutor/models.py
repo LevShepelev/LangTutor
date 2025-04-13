@@ -1,10 +1,13 @@
+"""
+Models for the tutor app.
+"""
+
+# pylint: disable=import-error,too-few-public-methods
 from django.db import models
 
 
 class Lesson(models.Model):
-    """
-    Модель, представляющая урок по предмету.
-    """
+    """Model representing a lesson."""
 
     title = models.CharField(max_length=200)
     content = models.TextField(blank=True)
@@ -15,12 +18,9 @@ class Lesson(models.Model):
 
 
 class ChatSession(models.Model):
-    """
-    Модель для хранения сессии чата, привязанной к конкретному уроку (предмету).
-    """
+    """Model representing a chat session for a lesson."""
 
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
-    # Может хранить идентификатор сессии браузера (если понадобится)
     session_key = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -29,9 +29,7 @@ class ChatSession(models.Model):
 
 
 class ChatMessage(models.Model):
-    """
-    Модель для хранения отдельного сообщения в рамках сессии чата.
-    """
+    """Model representing a chat message."""
 
     ROLE_CHOICES = [
         ("system", "System"),

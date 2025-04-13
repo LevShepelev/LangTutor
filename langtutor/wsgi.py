@@ -2,6 +2,7 @@
 WSGI config for LangTutor project.
 """
 
+# pylint: disable=import-error
 import os
 
 from django.core.wsgi import get_wsgi_application

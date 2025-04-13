@@ -1,3 +1,8 @@
+"""
+URL configuration for the tutor app.
+"""
+
+# pylint: disable=import-error,invalid-name
 from django.urls import path
 
 from .views import ChatView, HomeView, LessonDetailView

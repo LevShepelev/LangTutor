@@ -1,3 +1,8 @@
+"""
+Project URL configuration for LangTutor.
+"""
+
+# pylint: disable=import-error
 from django.contrib import admin
 from django.urls import include, path
 

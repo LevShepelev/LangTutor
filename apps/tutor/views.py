@@ -1,3 +1,9 @@
+"""
+Views for the tutor app.
+"""
+
+# pylint: disable=import-error,line-too-long,too-few-public-methods,missing-function-docstring,no-self-use,broad-except
+
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render
 from django.views import View
@@ -6,7 +12,7 @@ from .forms import ChatForm
 from .mistral_api import MistralAPI
 from .models import ChatMessage, ChatSession, Lesson
 
-# Инициализация клиента Mistral API
+# Initialize Mistral API client
 MISTRAL_API_KEY = "H4QoRNAxAOW1o0c9TVY7UIWf9ucZHjiN"
 mistral_client = MistralAPI(
     api_key=MISTRAL_API_KEY, rate_limit=settings.MISTRAL_API_RATE_LIMIT
@@ -14,34 +20,29 @@ mistral_client = MistralAPI(
 
 
 class HomeView(View):
-    """
-    Представление главной страницы, где отображается список уроков.
-    """
+    """Render home page with list of lessons."""
 
     def get(self, request):
+        """Return home page with lesson list."""
         lessons = Lesson.objects.all()
         return render(request, "tutor/home.html", {"lessons": lessons})
 
 
 class LessonDetailView(View):
-    """
-    Представление страницы с подробным описанием урока.
-    """
+    """Render a detail page for a lesson."""
 
     def get(self, request, lesson_id):
+        """Return lesson detail page for a given lesson."""
         lesson = get_object_or_404(Lesson, pk=lesson_id)
         return render(request, "tutor/lesson.html", {"lesson": lesson})
 
 
 class ChatView(View):
-    """
-    Представление для чата с сохранением истории сообщений, привязанной к уроку.
-    URL ожидает параметр lesson_id.
-    """
+    """Handles chat sessions and messages for a given lesson."""
 
     def get(self, request, lesson_id):
+        """Render chat view with existing message history."""
         lesson = get_object_or_404(Lesson, pk=lesson_id)
-        # Получаем или создаем сессию чата для данного урока.
         chat_session_id = request.session.get("chat_session_id")
         if chat_session_id:
             try:
@@ -68,6 +69,7 @@ class ChatView(View):
         )
 
     def post(self, request, lesson_id):
+        """Process the submitted chat message and update conversation history."""
         lesson = get_object_or_404(Lesson, pk=lesson_id)
         chat_session_id = request.session.get("chat_session_id")
         if chat_session_id:
@@ -89,31 +91,23 @@ class ChatView(View):
         form = ChatForm(request.POST)
         if form.is_valid():
             user_prompt = form.cleaned_data["prompt"]
-            # Сохраним сообщение пользователя
             ChatMessage.objects.create(
                 chat_session=chat_session, role="user", content=user_prompt
             )
-
-            # Если в сессии еще нет системного сообщения, добавляем его с промптом для выбранного предмета.
             if not chat_session.messages.filter(role="system").exists():
                 system_prompt = f"Ты опытный преподаватель по предмету '{lesson.title}'. Отвечай подробно и понятно."
                 ChatMessage.objects.create(
                     chat_session=chat_session, role="system", content=system_prompt
                 )
-
-            # Собираем историю сообщений для отправки в LLM API
             conversation = []
             for msg in chat_session.messages.order_by("timestamp"):
                 conversation.append({"role": msg.role, "content": msg.content})
-
             try:
                 answer = mistral_client.chat_complete(
                     messages=conversation, model="mistral-large-latest", temperature=0.2
                 )
-            except Exception as e:
-                answer = f"Ошибка при обращении к Mistral API: {e}"
-
-            # Сохраняем ответ помощника
+            except Exception as exc:
+                answer = f"Ошибка при обращении к Mistral API: {exc}"
             ChatMessage.objects.create(
                 chat_session=chat_session, role="assistant", content=answer
             )
@@ -131,9 +125,5 @@ class ChatView(View):
         return render(
             request,
             "tutor/chat.html",
-            {
-                "form": form,
-                "messages_history": messages_history,
-                "lesson": lesson,
-            },
+            {"form": form, "messages_history": messages_history, "lesson": lesson},
         )
