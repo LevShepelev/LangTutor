@@ -1,13 +1,13 @@
 {% extends "tutor/base.html" %}
-
 {% block title %}Главная{% endblock %}
-
 {% block content %}
   <h2>Уроки</h2>
   <ul>
     {% for lesson in lessons %}
       <li>
-        <a href="{% url 'tutor:lesson_detail' lesson.id %}">{{ lesson.title }}</a>
+        <strong>{{ lesson.title }}</strong>
+        <a href="{% url 'tutor:lesson_detail' lesson.id %}">Подробнее</a>
+        <a href="{% url 'tutor:chat' lesson.id %}">Перейти в чат</a>
       </li>
     {% empty %}
       <li>Нет доступных уроков.</li>

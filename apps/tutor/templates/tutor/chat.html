@@ -1,18 +1,23 @@
 {% extends "tutor/base.html" %}
-
-{% block title %}Чат{% endblock %}
-
+{% block title %}Чат по {{ lesson.title }}{% endblock %}
 {% block content %}
-  <h2>Чат с LangTutor</h2>
+  <h2>Чат по {{ lesson.title }}</h2>
+  <div class="chat-history">
+    {% for msg in messages_history %}
+      <div class="chat-message chat-{{ msg.role }}">
+        <strong>{{ msg.role|capfirst }}:</strong>
+        <p>{{ msg.content }}</p>
+      </div>
+    {% empty %}
+      <p>История сообщений пуста. Начните диалог ниже.</p>
+    {% endfor %}
+  </div>
+
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Отправить</button>
   </form>
-  {% if response %}
-    <div class="chat-response">
-      <h3>Ответ от Mistral LLM:</h3>
-      <p>{{ response }}</p>
-    </div>
-  {% endif %}
+
+  <a href="{% url 'tutor:home' %}">Вернуться на главную</a>
 {% endblock %}

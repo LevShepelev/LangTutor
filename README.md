@@ -1,6 +1,9 @@
 # LangTutor
 
-LangTutor – это образовательное веб-приложение на Django, которое помогает в изучении иностранных языков. Платформа предоставляет интерактивные уроки и чат-интерфейс, использующий API Mistral LLM для практики языка и получения обратной связи.
+LangTutor – это образовательное веб-приложение на Django, которое помогает в
+изучении иностранных языков. Платформа предоставляет интерактивные уроки и
+чат-интерфейс, использующий API Mistral LLM для практики языка и получения
+обратной связи.
 
 ## Особенности
 
@@ -12,21 +15,21 @@ LangTutor – это образовательное веб-приложение 
 ## Установка
 
 1. Установите зависимости через Poetry:
-    ```bash
-    poetry install
-    ```
+   ```bash
+   poetry install
+   ```
 2. Установите pre-commit хуки:
-    ```bash
-    pre-commit install
-    ```
+   ```bash
+   pre-commit install
+   ```
 3. Примените миграции:
-    ```bash
-    poetry run python manage.py migrate
-    ```
+   ```bash
+   poetry run python manage.py migrate
+   ```
 4. Запустите сервер разработки:
-    ```bash
-    poetry run python manage.py runserver
-    ```
+   ```bash
+   poetry run python manage.py runserver
+   ```
 
 ## Лицензия
 
