@@ -1,0 +1,18 @@
+{% extends "tutor/base.html" %}
+
+{% block title %}Чат{% endblock %}
+
+{% block content %}
+  <h2>Чат с LangTutor</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+  </form>
+  {% if response %}
+    <div class="chat-response">
+      <h3>Ответ от Mistral LLM:</h3>
+      <p>{{ response }}</p>
+    </div>
+  {% endif %}
+{% endblock %}

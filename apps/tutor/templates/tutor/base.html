@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LangTutor - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'tutor/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'tutor:home' %}">LangTutor</a></h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'tutor:home' %}">Главная</a></li>
+                <li><a href="{% url 'tutor:chat' %}">Чат</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 LangTutor. Все права защищены.</p>
+    </footer>
+</body>
+</html>
