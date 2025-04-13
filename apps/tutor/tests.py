@@ -10,7 +10,7 @@ from django.urls import reverse
 from apps.tutor.models import Lesson
 
 
-class TutorTests(TestCase):
+class TestTutor(TestCase):
     """
     Test suite for the tutor app views.
     """
